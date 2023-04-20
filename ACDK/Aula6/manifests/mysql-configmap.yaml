@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-configmap
+data:
+  hostname: mysql_host
+  username: mysql_user
+  database: mysql_db  

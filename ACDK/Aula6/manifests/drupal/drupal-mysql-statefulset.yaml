@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: drupal-mysql
+  namespace: drupal
+  labels:
+    app: drupal
+spec:
+  selector:
+    matchLabels:
+      app: drupal
+      tier: db
+  serviceName: "drupal-mysql"
+  template:
+    metadata:
+      labels:
+        app: drupal
+        tier: db
+    spec:
+      containers:
+      - image: mysql:5.7
+        name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass
+              key: password
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass
+              key: password
+        - name: MYSQL_USER
+          valueFrom:
+            configMapKeyRef:
+              name: mysql-param
+              key: username
+        - name: MYSQL_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: mysql-param
+              key: database
+        ports:
+        - containerPort: 3306
+          name: mysql

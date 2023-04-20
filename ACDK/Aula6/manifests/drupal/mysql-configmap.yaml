@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-param
+  namespace: drupal
+  labels:
+    app: drupal
+data:
+  hostname: drupal-mysql
+  username: drupal_user
+  database: drupal
